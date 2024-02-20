@@ -72,8 +72,8 @@ impl Build {
             .define("LUA_USE_AFORMAT", None)
             .define("LUA_USE_LONGLONG", None)
             .define("USE_LUA_PACKAGE", None)
-            .flag_if_supported("-std=c++14")
-            .flag_if_supported("/std:c++14") // MSVC
+            .flag_if_supported("-std=c++17")
+            .flag_if_supported("/std:c++17") // MSVC
             .cpp(true);
 
         match target {
