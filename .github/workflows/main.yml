@@ -34,18 +34,18 @@ jobs:
     - uses: dtolnay/rust-toolchain@stable
       with:
         target: ${{ matrix.target }}
-    - name: Install GCC (i686-unknown-linux-gnu)
-      if: ${{ matrix.target == 'i686-unknown-linux-gnu' }}
-      run: |
-        sudo apt-get update -y
-        sudo apt-get install -y --no-install-recommends gcc-multilib
-      shell: bash
-    - name: Install GCC (x86_64-pc-windows-gnu)
-      if: ${{ matrix.target == 'x86_64-pc-windows-gnu' }}
-      run: |
-        sudo apt-get update -y
-        sudo apt-get install -y --no-install-recommends gcc-mingw-w64-x86-64 gcc-mingw-w64-x86-64-win32
-      shell: bash
+    # - name: Install GCC (i686-unknown-linux-gnu)
+    #   if: ${{ matrix.target == 'i686-unknown-linux-gnu' }}
+    #   run: |
+    #     sudo apt-get update -y
+    #     sudo apt-get install -y --no-install-recommends gcc-multilib
+    #   shell: bash
+    # - name: Install GCC (x86_64-pc-windows-gnu)
+    #   if: ${{ matrix.target == 'x86_64-pc-windows-gnu' }}
+    #   run: |
+    #     sudo apt-get update -y
+    #     sudo apt-get install -y --no-install-recommends gcc-mingw-w64-x86-64
+    #   shell: bash
     - name: Install GCC (arm-unknown-linux-gnueabi)
       if: ${{ matrix.target == 'arm-unknown-linux-gnueabi' }}
       run: |
