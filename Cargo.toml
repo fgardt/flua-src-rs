@@ -1,0 +1,17 @@
+[package]
+name = "flua-src"
+version = "0.1.0+factorio-1.1.104"
+authors = ["fgardt <me@fgardt.dev>"]
+edition = "2021"
+repository = "https://github.com/fgardt/flua-src-rs"
+keywords = ["lua", "flua", "factorio"]
+license = "MIT"
+description = """
+Sources of Factorios Lua and logic to build them.
+"""
+
+[workspace]
+members = ["testcrate"]
+
+[dependencies]
+cc = "1.0.83"

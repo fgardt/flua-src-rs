@@ -1,0 +1,3 @@
+[submodule "flua"]
+	path = flua
+	url = git@github.com:Rseding91/Factorio-Lua.git
