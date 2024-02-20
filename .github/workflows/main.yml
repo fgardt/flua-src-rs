@@ -44,7 +44,7 @@ jobs:
       if: ${{ matrix.target == 'x86_64-pc-windows-gnu' }}
       run: |
         sudo apt-get update -y
-        sudo apt-get install -y --no-install-recommends gcc-mingw-w64-x86-64
+        sudo apt-get install -y --no-install-recommends gcc-mingw-w64-x86-32
       shell: bash
     - name: Install GCC (arm-unknown-linux-gnueabi)
       if: ${{ matrix.target == 'arm-unknown-linux-gnueabi' }}
