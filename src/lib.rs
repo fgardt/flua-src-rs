@@ -92,9 +92,7 @@ impl Build {
             _ if target.contains("apple-darwin") => {
                 config.define("LUA_USE_MACOSX", None);
             }
-            _ if target.contains("windows") => {
-                config.define("LUA_USE_WINDOWS", None);
-            }
+            _ if target.contains("windows") => {}
             _ => panic!("don't know how to build Factorio Lua for {}", target),
         }
 
