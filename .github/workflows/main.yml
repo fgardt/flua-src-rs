@@ -46,7 +46,7 @@ jobs:
     - name: Build
       run: |
         cargo build --manifest-path testcrate/Cargo.toml --target ${{ matrix.target }} --release
-      shell: bash
+      # shell: bash
 
   test:
     name: Test
@@ -72,7 +72,7 @@ jobs:
     - name: Run tests
       run: |
         cargo test --manifest-path testcrate/Cargo.toml --release
-      shell: bash
+      # shell: bash
 
   rustfmt:
     name: Rustfmt
