@@ -43,11 +43,6 @@ jobs:
         sudo apt-get update -y
         sudo apt-get install -y --no-install-recommends gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libc6-dev-arm64-cross
       shell: bash
-    - name: Install MinGW (x86_64-pc-windows-gnu)
-      if: ${{ matrix.target == 'x86_64-pc-windows-gnu' }}
-      uses: egor-tensin/setup-mingw@v2
-      with:
-        version: 12.2.0
     - name: Build
       run: |
         cargo build --manifest-path testcrate/Cargo.toml --target ${{ matrix.target }} --release

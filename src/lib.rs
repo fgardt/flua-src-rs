@@ -67,7 +67,6 @@ impl Build {
             .opt_level(2)
             .cargo_metadata(false)
             .define("LUA_COMPAT_ALL", None)
-            .define("LUA_USE_POSIX", None)
             .define("LUA_USE_STRTODHEX", None)
             .define("LUA_USE_AFORMAT", None)
             .define("LUA_USE_LONGLONG", None)
@@ -78,19 +77,29 @@ impl Build {
 
         match target {
             _ if target.contains("linux") => {
-                config.define("LUA_USE_LINUX", None);
+                config
+                    .define("LUA_USE_LINUX", None)
+                    .define("LUA_USE_POSIX", None);
             }
             _ if target.contains("freebsd") => {
-                config.define("LUA_USE_LINUX", None);
+                config
+                    .define("LUA_USE_LINUX", None)
+                    .define("LUA_USE_POSIX", None);
             }
             _ if target.contains("netbsd") => {
-                config.define("LUA_USE_LINUX", None);
+                config
+                    .define("LUA_USE_LINUX", None)
+                    .define("LUA_USE_POSIX", None);
             }
             _ if target.contains("openbsd") => {
-                config.define("LUA_USE_LINUX", None);
+                config
+                    .define("LUA_USE_LINUX", None)
+                    .define("LUA_USE_POSIX", None);
             }
             _ if target.contains("apple-darwin") => {
-                config.define("LUA_USE_MACOSX", None);
+                config
+                    .define("LUA_USE_MACOSX", None)
+                    .define("LUA_USE_POSIX", None);
             }
             _ if target.contains("windows") => {}
             _ => panic!("don't know how to build Factorio Lua for {}", target),
