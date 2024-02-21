@@ -1,8 +1,8 @@
 # flua-src
 [![Build Status]][github-actions]
 
-[Build Status]: https://github.com/fgardt/fuau-src-rs/workflows/CI/badge.svg
-[github-actions]: https://github.com/fgardt/fuau-src-rs/actions
+[Build Status]: https://github.com/fgardt/flua-src-rs/workflows/CI/badge.svg
+[github-actions]: https://github.com/fgardt/flua-src-rs/actions
 
 This crate contains the source of Factorios custom [Lua] (as a submodule) and logic to build them.
 Intended to be consumed by the [mlua-sys] crate.
