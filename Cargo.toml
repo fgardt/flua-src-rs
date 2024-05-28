@@ -1,6 +1,6 @@
 [package]
 name = "flua-src"
-version = "0.1.0+factorio-1.1.104"
+version = "1.0.0+factorio-1.1.107"
 authors = ["fgardt <me@fgardt.dev>"]
 edition = "2021"
 repository = "https://github.com/fgardt/flua-src-rs"
