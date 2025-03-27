@@ -63,7 +63,7 @@ impl Build {
         config
             .target(target)
             .host(host)
-            .warnings(false)
+            .warnings(true)
             .opt_level(2)
             .cargo_metadata(false)
             .define("LUA_COMPAT_ALL", None)
