@@ -14,4 +14,4 @@ Sources of Factorios Lua and logic to build them.
 members = ["testcrate"]
 
 [dependencies]
-cc = "1.0.83"
+cc = "1.2"
