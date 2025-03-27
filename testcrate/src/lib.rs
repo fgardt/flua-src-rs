@@ -11,10 +11,10 @@ extern "C" {
 
 #[test]
 fn lua_works() {
-    use std::{ptr, slice};
+    use std::slice;
     unsafe {
         let state = luaL_newstate();
-        assert!(state != ptr::null_mut());
+        assert!(!state.is_null());
 
         luaL_openlibs(state);
 
