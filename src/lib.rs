@@ -63,7 +63,7 @@ impl Build {
         config
             .target(target)
             .host(host)
-            .warnings(true)
+            .warnings(false)
             .opt_level(2)
             .cargo_metadata(false)
             .define("LUA_COMPAT_ALL", None)
@@ -88,7 +88,10 @@ impl Build {
                 config.define("LUA_USE_MACOSX", None);
             }
             _ if target.contains("windows") => {
-                config.define("LUA_WIN", None);
+                config
+                    .define("WIN32", None)
+                    .define("_WIN32", None)
+                    .define("LUA_WIN", None);
             }
             _ => panic!("don't know how to build Factorio Lua for {}", target),
         }
