@@ -67,8 +67,8 @@ impl Build {
             .opt_level(2)
             .cargo_metadata(false)
             .define("LUA_COMPAT_ALL", None)
-            .flag_if_supported("-std=c++14")
-            .flag_if_supported("/std:c++latest") // MSVC
+            .flag_if_supported("-std=c++20")
+            .flag_if_supported("/std:c++20") // MSVC
             .cpp(true);
 
         match target {
