@@ -88,12 +88,46 @@ impl Build {
                 config.define("LUA_USE_MACOSX", None);
             }
             _ if target.contains("windows") => {
+                // /DWIN32_LEAN_AND_MEAN
+                // /DCRT_NONSTDC_NO_DEPRECATE
+                // /D_CRT_SECURE_NO_WARNINGS
+                // /D_SCL_SECURE_NO_WARNINGS
+                // /D_WINDOWS
+                // /D_USE_MATH_DEFINES
+                // /DUSE_THREADS
+                // /DWIN32
+                // /D_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS
+                // /DLUA_USE_LONGLONG
+                // /DFACTORIO_USE_D3D
+                // /DWIN64
+                // /D_DEBUG
+                // /DDEBUG
+                // /DUSE_COMMON_HPP
+                // /DLUA_USE_APICHECK
+                // /DDISABLE_EXPRESSION_ID
+                // /DSPACE_AGE
+                // /D_WIN32_WINNT=0x0601
+                // /D_WIN32_WINNT=0x0601
                 config
+                    .define("WIN32_LEAN_AND_MEAN", None)
+                    .define("CRT_NONSTDC_NO_DEPRECATE", None)
+                    .define("_CRT_SECURE_NO_WARNINGS", None)
+                    .define("_SCL_SECURE_NO_WARNINGS", None)
+                    .define("_WINDOWS", None)
+                    .define("_USE_MATH_DEFINES", None)
+                    .define("USE_THREADS", None)
                     .define("WIN32", None)
-                    .define("_WIN32", None)
-                    .define("LUA_WIN", None);
+                    .define("_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS", None)
+                    .define("LUA_USE_LONGLONG", None)
+                    .define("WIN64", None)
+                    .define("_DEBUG", None)
+                    .define("DEBUG", None)
+                    .define("USE_COMMON_HPP", None)
+                    .define("LUA_USE_APICHECK", None)
+                    .define("DISABLE_EXPRESSION_ID", None)
+                    .define("SPACE_AGE", None);
             }
-            _ => panic!("don't know how to build Factorio Lua for {}", target),
+            _ => panic!("don't know how to build Factorio Lua for {target}"),
         }
 
         if cfg!(debug_assertions) {
