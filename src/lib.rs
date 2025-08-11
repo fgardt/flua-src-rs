@@ -162,6 +162,7 @@ impl Build {
         }
     }
 
+    #[allow(clippy::if_same_then_else)]
     fn get_cpp_link_stdlib(target: &str) -> Option<String> {
         // Copied from the `cc` crate
         if target.contains("msvc") {
@@ -196,10 +197,10 @@ impl Artifacts {
     pub fn print_cargo_metadata(&self) {
         println!("cargo:rustc-link-search=native={}", self.lib_dir.display());
         for lib in self.libs.iter() {
-            println!("cargo:rustc-link-lib=static={}", lib);
+            println!("cargo:rustc-link-lib=static={lib}");
         }
         if let Some(ref cpp_stdlib) = self.cpp_stdlib {
-            println!("cargo:rustc-link-lib={}", cpp_stdlib);
+            println!("cargo:rustc-link-lib={cpp_stdlib}");
         }
         println!("cargo:include={}", self.include_dir.display());
         println!("cargo:lib={}", self.lib_dir.display());
