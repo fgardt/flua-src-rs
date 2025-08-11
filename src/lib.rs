@@ -67,43 +67,41 @@ impl Build {
             .opt_level(2)
             .cargo_metadata(false)
             .define("LUA_COMPAT_ALL", None)
-            .define("LUA_USE_STRTODHEX", None)
-            .define("LUA_USE_AFORMAT", None)
             .define("LUA_USE_LONGLONG", None)
-            .define("USE_LUA_PACKAGE", None)
-            .define("USE_LUA_COROUTINE", None)
-            .flag_if_supported("-std=c++14")
-            .flag_if_supported("/std:c++14") // MSVC
+            .flag_if_supported("-std=c++20")
+            .flag_if_supported("/std:c++20") // MSVC
             .cpp(true);
 
-        match target {
-            _ if target.contains("linux") => {
-                config
-                    .define("LUA_USE_LINUX", None)
-                    .define("LUA_USE_POSIX", None);
-            }
-            _ if target.contains("freebsd") => {
-                config
-                    .define("LUA_USE_LINUX", None)
-                    .define("LUA_USE_POSIX", None);
-            }
-            _ if target.contains("netbsd") => {
-                config
-                    .define("LUA_USE_LINUX", None)
-                    .define("LUA_USE_POSIX", None);
-            }
-            _ if target.contains("openbsd") => {
-                config
-                    .define("LUA_USE_LINUX", None)
-                    .define("LUA_USE_POSIX", None);
-            }
-            _ if target.contains("apple-darwin") => {
-                config
-                    .define("LUA_USE_MACOSX", None)
-                    .define("LUA_USE_POSIX", None);
-            }
-            _ if target.contains("windows") => {}
-            _ => panic!("don't know how to build Factorio Lua for {}", target),
+        if target.contains("linux")
+            || target.contains("freebsd")
+            || target.contains("netbsd")
+            || target.contains("openbsd")
+        {
+            config
+                .define("LUA_USE_LINUX", None)
+                .define("LUA_USE_AFORMAT", None)
+                .define("LUA_USE_POSIX", None)
+                .define("LUA_USE_STRTODHEX", None)
+                .define("USE_MATH_DEFINES", None);
+        } else if target.contains("apple-darwin") {
+            config
+                .define("LUA_USE_MACOSX", None)
+                .define("LUA_USE_AFORMAT", None)
+                .define("LUA_USE_POSIX", None)
+                .define("LUA_USE_STRTODHEX", None)
+                .define("_USE_MATH_DEFINES", None);
+        } else if target.contains("windows") {
+            config
+                .define("WIN32", None)
+                .define("_USE_MATH_DEFINES", None)
+                .flag("-Gy-")
+                .flag("-EHs")
+                .flag("-TP")
+                .flag("-Zc:rvalueCast")
+                .flag("-Zc:ternary")
+                .flag("-Zc:referenceBinding");
+        } else {
+            panic!("don't know how to build Factorio Lua for {target}")
         }
 
         if cfg!(debug_assertions) {
@@ -114,6 +112,7 @@ impl Build {
             .include(&source_dir)
             .flag("-w")
             .flag_if_supported("-fno-common")
+            .flag_if_supported("-fp:strict")
             .file(source_dir.join("lapi.c"))
             .file(source_dir.join("lauxlib.c"))
             .file(source_dir.join("lbaselib.c"))
@@ -163,6 +162,7 @@ impl Build {
         }
     }
 
+    #[allow(clippy::if_same_then_else)]
     fn get_cpp_link_stdlib(target: &str) -> Option<String> {
         // Copied from the `cc` crate
         if target.contains("msvc") {
@@ -197,10 +197,10 @@ impl Artifacts {
     pub fn print_cargo_metadata(&self) {
         println!("cargo:rustc-link-search=native={}", self.lib_dir.display());
         for lib in self.libs.iter() {
-            println!("cargo:rustc-link-lib=static={}", lib);
+            println!("cargo:rustc-link-lib=static={lib}");
         }
         if let Some(ref cpp_stdlib) = self.cpp_stdlib {
-            println!("cargo:rustc-link-lib={}", cpp_stdlib);
+            println!("cargo:rustc-link-lib={cpp_stdlib}");
         }
         println!("cargo:include={}", self.include_dir.display());
         println!("cargo:lib={}", self.lib_dir.display());
