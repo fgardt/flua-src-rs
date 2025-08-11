@@ -67,39 +67,41 @@ impl Build {
             .opt_level(2)
             .cargo_metadata(false)
             .define("LUA_COMPAT_ALL", None)
+            .define("LUA_USE_LONGLONG", None)
             .flag_if_supported("-std=c++20")
             .flag_if_supported("/std:c++20") // MSVC
             .cpp(true);
 
-        match target {
-            _ if target.contains("linux") => {
-                config.define("LUA_USE_LINUX", None);
-            }
-            _ if target.contains("freebsd") => {
-                config.define("LUA_USE_LINUX", None);
-            }
-            _ if target.contains("netbsd") => {
-                config.define("LUA_USE_LINUX", None);
-            }
-            _ if target.contains("openbsd") => {
-                config.define("LUA_USE_LINUX", None);
-            }
-            _ if target.contains("apple-darwin") => {
-                config.define("LUA_USE_MACOSX", None);
-            }
-            _ if target.contains("windows") => {
-                config
-                    .define("_USE_MATH_DEFINES", None)
-                    .define("WIN32", None)
-                    .define("LUA_USE_LONGLONG", None)
-                    .flag("-Gy-")
-                    .flag("-EHs")
-                    .flag("-TP")
-                    .flag("-Zc:rvalueCast")
-                    .flag("-Zc:ternary")
-                    .flag("-Zc:referenceBinding");
-            }
-            _ => panic!("don't know how to build Factorio Lua for {target}"),
+        if target.contains("linux")
+            || target.contains("freebsd")
+            || target.contains("netbsd")
+            || target.contains("openbsd")
+        {
+            config
+                .define("LUA_USE_LINUX", None)
+                .define("LUA_USE_AFORMAT", None)
+                .define("LUA_USE_POSIX", None)
+                .define("LUA_USE_STRTODHEX", None)
+                .define("USE_MATH_DEFINES", None);
+        } else if target.contains("apple-darwin") {
+            config
+                .define("LUA_USE_MACOSX", None)
+                .define("LUA_USE_AFORMAT", None)
+                .define("LUA_USE_POSIX", None)
+                .define("LUA_USE_STRTODHEX", None)
+                .define("_USE_MATH_DEFINES", None);
+        } else if target.contains("windows") {
+            config
+                .define("WIN32", None)
+                .define("_USE_MATH_DEFINES", None)
+                .flag("-Gy-")
+                .flag("-EHs")
+                .flag("-TP")
+                .flag("-Zc:rvalueCast")
+                .flag("-Zc:ternary")
+                .flag("-Zc:referenceBinding");
+        } else {
+            panic!("don't know how to build Factorio Lua for {target}")
         }
 
         if cfg!(debug_assertions) {
